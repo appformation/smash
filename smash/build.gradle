@@ -10,6 +10,11 @@ android
         minSdkVersion 15
         targetSdkVersion 23
     }
+
+    lintOptions
+    {
+        lintConfig file('../gradle/lint.xml')
+    }
 }
 
 dependencies
