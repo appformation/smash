@@ -1,4 +1,4 @@
-Smash
+Smash [![Build Status](https://travis-ci.org/appformation/smash.svg?branch=master)](https://travis-ci.org/appformation/smash)
 =====
 
 Smash is Volley insipired networking library that's using [OkHttp][okhttp] in its core.
