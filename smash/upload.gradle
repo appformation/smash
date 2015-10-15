@@ -63,28 +63,31 @@ artifacts {
     archives sourcesJar
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-bintray
+if (project.rootProject.file("local.properties").exists())
 {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-    configurations = ['archives']
-    pkg
+    bintray
     {
-        repo = "maven"
-        name = "Smash"
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
+        user = properties.getProperty("bintray.user")
+        key = properties.getProperty("bintray.apikey")
 
-        version { gpg
+        configurations = ['archives']
+        pkg
         {
-            sign = true
-            passphrase = properties.getProperty("bintray.gpg.password")
-        } }
+            repo = "maven"
+            name = "Smash"
+            websiteUrl = siteUrl
+            vcsUrl = gitUrl
+            licenses = ["Apache-2.0"]
+            publish = true
+
+            version { gpg
+            {
+                sign = true
+                passphrase = properties.getProperty("bintray.gpg.password")
+            } }
+        }
     }
 }
