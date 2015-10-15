@@ -74,8 +74,6 @@ public class SmashResponse<T>
 
     /**
      * Returns parsed response if successful.
-     *
-     * @return Response<T>
      */
     public T getResult()
     {

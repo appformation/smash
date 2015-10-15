@@ -217,7 +217,7 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
     }
 
     /**
-     * Returns a Map<String, String> of parameters to be used for a POST or PUT request.
+     * Returns a Map&lt;String, String&gt; of parameters to be used for a POST or PUT request.
      * Note that you can directly override {@link #getBody()} for custom data.
      */
     protected Map<String, String> getParams()
