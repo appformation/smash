@@ -3,6 +3,16 @@ Smash [![Build Status](https://travis-ci.org/appformation/smash.svg?branch=maste
 
 Smash is Volley insipired networking library that's using [OkHttp][okhttp] in its core.
 
+Usage
+-----
+
+Add Smash library to your project `build.gradle`
+```groovy
+dependencies
+{
+    compile 'pl.appformation:smash:0.1.0'
+}
+```
 
 License
 -------
