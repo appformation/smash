@@ -15,6 +15,41 @@ dependencies
 }
 ```
 
+Instantiate one shared SmashQueue object (e.g. in your Application class):
+```java
+mSmashQueue = Smash.buildSmashQueue(getApplicationContext());
+```
+
+To request contest of server as String do following:
+```java
+String url = "https://github.com/appformation/smash";
+SmashStringRequest request = new SmashStringRequest(SmashRequest.Method.GET, url,
+        new SmashResponse.SuccessListener<String>()
+        {
+            public void onResponse(String response)
+            {
+                handleMyNiftyResponse(response);
+            }
+        }, new SmashResponse.FailedListener()
+        {
+            public void onFailedResponse(SmashError error)
+            {
+                showImpedingDoomError(error);
+            }
+        });
+```
+
+Request object looks definitely cooler with [Retrolambda] library:
+```java
+SmashStringRequest request = new SmashStringRequest(SmashRequest.Method.GET, url,
+    this::handleNiftyResponse, this::showImpliedDoomError);
+```
+
+Constructed request this way we now need to add to our SmashQueue:
+```java
+mSmashQueue.add(request);
+```
+
 Why another library?
 --------------------
 
@@ -28,6 +63,7 @@ What's different than in Volley
 * [Source] class from OkIo is used instead of InputStream
 * Ability to modify User-Agent field globally for all requests
 * Both listeners are obligatory in request constructor
+* To prevent class names conflicting with OkHttp all smash classes have Smash prefix
 
 
 Things to do
@@ -69,3 +105,4 @@ License
  [okio]: http://github.com/square/okio/
  [moshi]: http://github.com/square/moshi/
  [source]: https://square.github.io/okio/okio/Source.html
+ [retrolambda]: https://github.com/orfjackal/retrolambda
