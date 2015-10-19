@@ -20,7 +20,7 @@ Instantiate one shared SmashQueue object (e.g. in your Application class):
 mSmashQueue = Smash.buildSmashQueue(getApplicationContext());
 ```
 
-To request contest of server as String do following:
+To request content of server as String do following:
 ```java
 String url = "https://github.com/appformation/smash";
 SmashStringRequest request = new SmashStringRequest(SmashRequest.Method.GET, url,
@@ -34,7 +34,7 @@ SmashStringRequest request = new SmashStringRequest(SmashRequest.Method.GET, url
         {
             public void onFailedResponse(SmashError error)
             {
-                showImpedingDoomError(error);
+                showImpendingDoomError(error);
             }
         });
 ```
@@ -42,7 +42,7 @@ SmashStringRequest request = new SmashStringRequest(SmashRequest.Method.GET, url
 Request object looks definitely cooler with [Retrolambda] library:
 ```java
 SmashStringRequest request = new SmashStringRequest(SmashRequest.Method.GET, url,
-    this::handleNiftyResponse, this::showImpliedDoomError);
+    this::handleNiftyResponse, this::showImpendingDoomError);
 ```
 
 Constructed request this way we now need to add to our SmashQueue:
