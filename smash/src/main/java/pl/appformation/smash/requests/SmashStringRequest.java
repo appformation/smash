@@ -1,6 +1,5 @@
 package pl.appformation.smash.requests;
 
-import android.util.Log;
 import java.io.IOException;
 import okio.Okio;
 import pl.appformation.smash.SmashNetworkData;

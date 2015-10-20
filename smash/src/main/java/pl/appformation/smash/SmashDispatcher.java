@@ -76,6 +76,7 @@ public class SmashDispatcher extends Thread
 
             Smash.log("SmashDispatcher", "Picked up request " + request);
             SmashNetworkData data = null;
+
             try
             {
                 if (request.isCanceled())
@@ -103,6 +104,12 @@ public class SmashDispatcher extends Thread
                 }
 
                 SmashResponse<?> response = request.parseResponse(data);
+                if (!response.isSuccess())
+                {
+                    deliverError(request, response.getError());
+                    continue;
+                }
+
                 deliverResponse(request, response);
             }
             catch (SmashError se)
