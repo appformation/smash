@@ -1,5 +1,5 @@
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: "com.jfrog.bintray"
+apply plugin: 'com.jfrog.bintray'
 
 def siteUrl = 'https://github.com/appformation/smash'
 def gitUrl = 'https://github.com/appformation/smash.git'

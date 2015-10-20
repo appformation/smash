@@ -1,7 +1,5 @@
 apply plugin: 'com.android.library'
 
-version = '0.1.0'
-
 android
 {
     compileSdkVersion 23
@@ -23,14 +21,14 @@ ext
 {
     PUBLISH_GROUP_ID = 'pl.appformation'
     PUBLISH_ARTIFACT_ID = 'smash'
-    PUBLISH_VERSION = '0.1.0'
+    PUBLISH_VERSION = '0.2.0'
 }
 
 dependencies
 {
     compile "com.squareup.okhttp:okhttp:2.4.0"
     compile "com.squareup.okhttp:okhttp-urlconnection:2.4.0"
-    compile 'com.android.support:support-annotations:23.0.1'
+    compile 'com.android.support:support-annotations:23.1.0'
 }
 
 apply from: 'upload.gradle'
