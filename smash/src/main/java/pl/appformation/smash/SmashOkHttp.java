@@ -16,6 +16,7 @@
 package pl.appformation.smash;
 
 import android.support.annotation.NonNull;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -34,9 +35,42 @@ import static pl.appformation.smash.SmashRequest.Method.PUT;
 public class SmashOkHttp
 {
 
+    /** Default OkHttpClient instance */
     private static OkHttpClient sHttpClient = new OkHttpClient();
 
-    public static @NonNull SmashNetworkData perform(SmashRequest<?> request) throws SmashError
+    /**
+     * Adds {@link Interceptor} object to default {@link OkHttpClient} instance.
+     *
+     * @param interceptor Interceptor object
+     */
+    public static void addNetworkInterceptor(@NonNull Interceptor interceptor)
+    {
+        sHttpClient.networkInterceptors().add(interceptor);
+    }
+
+    private static RequestBody convertBody(SmashRequest request, BufferedSource body) throws SmashError
+    {
+        try
+        {
+            return RequestBody.create(MediaType.parse(request.getBodyContentType()), body.readUtf8());
+        }
+        catch (IOException ioe)
+        {
+            throw new SmashError(ioe);
+        }
+    }
+
+    private static BufferedSource getBody(SmashRequest request)
+    {
+        if (request.getMethod() == GET || request.getMethod() == HEAD)
+        {
+            return null;
+        }
+
+        return request.getBody();
+    }
+
+    static @NonNull SmashNetworkData perform(SmashRequest<?> request) throws SmashError
     {
         SmashNetworkData data = new SmashNetworkData();
 
@@ -48,12 +82,36 @@ public class SmashOkHttp
             BufferedSource body = getBody(request);
             switch (request.getMethod())
             {
-                case GET: okBuilder = okBuilder.get(); break;
-                case POST: okBuilder = okBuilder.post(convertBody(request, body)); break;
-                case PUT: okBuilder = okBuilder.put(convertBody(request, body)); break;
-                case DELETE: okBuilder = okBuilder.delete(convertBody(request, body)); break;
-                case HEAD: okBuilder = okBuilder.head(); break;
-                case PATCH: okBuilder = okBuilder.patch(convertBody(request, body)); break;
+                case GET:
+                {
+                    okBuilder = okBuilder.get();
+                    break;
+                }
+                case POST:
+                {
+                    okBuilder = okBuilder.post(convertBody(request, body));
+                    break;
+                }
+                case PUT:
+                {
+                    okBuilder = okBuilder.put(convertBody(request, body));
+                    break;
+                }
+                case DELETE:
+                {
+                    okBuilder = okBuilder.delete(convertBody(request, body));
+                    break;
+                }
+                case HEAD:
+                {
+                    okBuilder = okBuilder.head();
+                    break;
+                }
+                case PATCH:
+                {
+                    okBuilder = okBuilder.patch(convertBody(request, body));
+                    break;
+                }
             }
 
             Request okRequest = okBuilder.build();
@@ -77,26 +135,14 @@ public class SmashOkHttp
         return data;
     }
 
-    private static RequestBody convertBody(SmashRequest request, BufferedSource body) throws SmashError
+    /**
+     * Removes {@link Interceptor} object from default {@link OkHttpClient} instance.
+     *
+     * @param interceptor Interceptor object
+     */
+    public static void removeNetworkInterceptor(@NonNull Interceptor interceptor)
     {
-        try
-        {
-            return RequestBody.create(MediaType.parse(request.getBodyContentType()), body.readUtf8());
-        }
-        catch (IOException ioe)
-        {
-            throw new SmashError(ioe);
-        }
-    }
-
-    private static BufferedSource getBody(SmashRequest request)
-    {
-        if (request.getMethod() == GET || request.getMethod() == HEAD)
-        {
-            return null;
-        }
-
-        return request.getBody();
+        sHttpClient.networkInterceptors().remove(interceptor);
     }
 
 }
