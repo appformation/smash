@@ -201,9 +201,12 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
     }
 
     /**
-     * Returns the content type of the POST or PUT body.
+     * Returns the content type of the POST or PUT body. Default response is
+     * application/x-www-form-urlencoded; charset=UTF-8
+     *
+     * This method should be overridden along with getBody().
      */
-    String getBodyContentType()
+    public String getBodyContentType()
     {
         return "application/x-www-form-urlencoded; charset=" + getParamsEncoding();
     }
