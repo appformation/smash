@@ -9,24 +9,24 @@ import pl.appformation.smash.SmashResponse.FailedListener;
 import pl.appformation.smash.SmashResponse.SuccessListener;
 import pl.appformation.smash.errors.SmashError;
 
-public class SmashStringRequest extends SmashRequest<String>
+public class SmashRawBytesRequest extends SmashRequest<byte[]>
 {
 
-    public SmashStringRequest(@MethodRes int method, SuccessListener<String> successListener, FailedListener failedListener)
+    public SmashRawBytesRequest(@MethodRes int method, SuccessListener<byte[]> successListener, FailedListener failedListener)
     {
         super(method, successListener, failedListener);
     }
 
-    public SmashStringRequest(@MethodRes int method, String url, SuccessListener<String> successListener, FailedListener failedListener)
+    public SmashRawBytesRequest(@MethodRes int method, String url, SuccessListener<byte[]> successListener, FailedListener failedListener)
     {
         super(method, url, successListener, failedListener);
     }
 
-    protected SmashResponse<String> parseResponse(SmashNetworkData data)
+    protected SmashResponse<byte[]> parseResponse(SmashNetworkData data)
     {
         try
         {
-            return SmashResponse.success(Okio.buffer(data.source).readUtf8());
+            return SmashResponse.success(Okio.buffer(data.source).readByteArray());
         }
         catch (IOException ioe)
         {
