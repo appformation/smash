@@ -39,6 +39,7 @@ public class SmashDispatcher extends Thread
      */
     public SmashDispatcher(BlockingQueue<SmashRequest<?>> queue)
     {
+        super("SmashDispatcher");
         this.mQueue = queue;
     }
 
