@@ -67,7 +67,7 @@ public class SmashOkHttp
                 body = new Buffer();
             }
 
-            return RequestBody.create(MediaType.parse(request.getBodyContentType()), body.readUtf8());
+            return RequestBody.create(MediaType.parse(request.getBodyContentType()), body.readByteArray());
         }
         catch (IOException ioe)
         {
