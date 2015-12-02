@@ -19,6 +19,8 @@ package pl.appformation.smash;
 import android.os.Looper;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import com.squareup.okhttp.Headers;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Retention;
@@ -63,6 +65,9 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
 
     /** Response thread Looper */
     private Looper mDeliverResponseOn;
+
+    /** Headers of this request */
+    private Headers mHeaders;
 
     /** HTTP request method */
     private final @MethodRes int mMethod;
@@ -212,6 +217,15 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
     }
 
     /**
+     * Returns headers of this request. Returned headers, if not null, will overwrite default headers.
+     * This also pertain to User-Agent header.
+     */
+    public @Nullable Headers getHeaders()
+    {
+        return mHeaders;
+    }
+
+    /**
      * Returns request method.
      */
     @MethodRes int getMethod()
@@ -303,7 +317,7 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
      * @param data Response network data
      * @return The parsed response, or null in the case of an error
      */
-    protected abstract SmashResponse parseResponse(SmashNetworkData data);
+    protected abstract SmashResponse<T> parseResponse(SmashNetworkData data);
 
     /**
      * Sets thread looper on which response will be delivered.
@@ -311,6 +325,17 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
     final void setDeliverResponseOn(Looper deliverResponseOn)
     {
         mDeliverResponseOn = deliverResponseOn;
+    }
+
+    /**
+     * Sets headers for this request. By default headers are null, they can be either
+     * overridden by getHeaders() with custom logic or added as parameter to this function.
+     *
+     * @param headers New headers.
+     */
+    public void setHeaders(Headers headers)
+    {
+        this.mHeaders = headers;
     }
 
     /**

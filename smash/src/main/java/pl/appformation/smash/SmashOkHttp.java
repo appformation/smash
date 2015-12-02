@@ -16,6 +16,7 @@
 package pl.appformation.smash;
 
 import android.support.annotation.NonNull;
+import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -35,6 +36,9 @@ import static pl.appformation.smash.SmashRequest.Method.PUT;
 
 public class SmashOkHttp
 {
+
+    /** User-Agent header name */
+    public static final String HEADER_USER_AGENT = "User-Agent";
 
     /** Default OkHttpClient instance */
     private static OkHttpClient sHttpClient = new OkHttpClient();
@@ -88,7 +92,17 @@ public class SmashOkHttp
         try
         {
             Request.Builder okBuilder = new Request.Builder().url(request.getUrl());
-            okBuilder.removeHeader("User-Agent").addHeader("User-Agent", Smash.getUserAgent());
+            okBuilder.addHeader(HEADER_USER_AGENT, Smash.getUserAgent());
+
+            Headers requestHeaders = request.getHeaders();
+            if (requestHeaders != null)
+            {
+                okBuilder.headers(requestHeaders);
+                if (!requestHeaders.names().contains(HEADER_USER_AGENT))
+                {
+                    okBuilder.addHeader(HEADER_USER_AGENT, Smash.getUserAgent());
+                }
+            }
 
             BufferedSource body = getBody(request);
             switch (request.getMethod())
