@@ -23,6 +23,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import java.io.IOException;
+import okio.Buffer;
 import okio.BufferedSource;
 import pl.appformation.smash.errors.SmashError;
 import static pl.appformation.smash.SmashRequest.Method.DELETE;
@@ -50,8 +51,18 @@ public class SmashOkHttp
 
     private static RequestBody convertBody(SmashRequest request, BufferedSource body) throws SmashError
     {
+        if (body == null && request.getMethod() == DELETE)
+        {
+            return RequestBody.create(null, new byte[0]);
+        }
+
         try
         {
+            if (body == null)
+            {
+                body = new Buffer();
+            }
+
             return RequestBody.create(MediaType.parse(request.getBodyContentType()), body.readUtf8());
         }
         catch (IOException ioe)
