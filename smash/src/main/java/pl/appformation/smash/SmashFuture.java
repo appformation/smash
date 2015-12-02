@@ -136,7 +136,7 @@ public class SmashFuture<T> implements Future<T>, SuccessListener<T>, FailedList
     /**
      * Handles failed response from dispatcher.
      */
-    public void onFailedResponse(SmashError error)
+    public synchronized void onFailedResponse(SmashError error)
     {
         if (mForwardFailedListener != null)
         {
@@ -150,7 +150,7 @@ public class SmashFuture<T> implements Future<T>, SuccessListener<T>, FailedList
     /**
      * Handles successful response from dispatcher.
      */
-    public void onResponse(T response)
+    public synchronized void onResponse(T response)
     {
         if (mForwardSuccessListener != null)
         {
