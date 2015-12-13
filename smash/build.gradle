@@ -31,4 +31,4 @@ dependencies
     compile 'com.android.support:support-annotations:23.1.1'
 }
 
-// apply from: 'upload.gradle'
+apply from: 'upload.gradle'
