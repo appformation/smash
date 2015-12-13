@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/appformation/smash.svg?branch=master)](https://travis-ci.org/appformation/smash)
 
-Smash is Volley insipired networking library that's using [OkHttp][okhttp] in its core.
+Smash is Volley inspired networking library that's using [OkHttp][okhttp] in its core.
 
 Usage
 -----
@@ -11,7 +11,7 @@ Add Smash library to your project `build.gradle`
 ```groovy
 dependencies
 {
-    compile 'pl.appformation:smash:0.1.0'
+    compile 'pl.appformation:smash:0.2.0'
 }
 ```
 
@@ -50,6 +50,13 @@ Constructed request this way we now need to add to our SmashQueue:
 mSmashQueue.add(request);
 ```
 
+Adding custom headers to request:
+```java
+SmashStringRequest request = ...
+request.setHeaders(Headers.of("CustomHeader", "Value",
+                              "AnotherHeader", "AnotherValue"));
+```
+
 Why another library?
 --------------------
 
@@ -71,8 +78,6 @@ Things to do
 
 * Retry policy (for now default from OkHttp is used)
 * Authentication mechanism in requests
-* Ability to easily add interceptors (e.g. Stetho)
-* More baked in request classes (JSONArray, JSONObject, byte[])
 * [Moshi] support (thanks to OkIo we can use Source class with Moshi)
 * Support for multipart/form-data upload
 * ... and last but not least, unit tests
@@ -81,7 +86,15 @@ Things to do
 Changelog
 ---------
 
-[Current version is 0.1.0](CHANGELOG.md)
+[Current version is 0.2.0](CHANGELOG.md)
+
+
+Dependencies
+------------
+
+* com.squareup.okhttp:okhttp 2.4.0
+* com.squareup.okhttp:okhttp-urlconnection 2.4.0
+* com.android.support:support-annotations 23.1.1
 
 
 License

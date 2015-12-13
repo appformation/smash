@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 android
 {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig
     {
@@ -28,7 +28,7 @@ dependencies
 {
     compile "com.squareup.okhttp:okhttp:2.4.0"
     compile "com.squareup.okhttp:okhttp-urlconnection:2.4.0"
-    compile 'com.android.support:support-annotations:23.1.0'
+    compile 'com.android.support:support-annotations:23.1.1'
 }
 
-apply from: 'upload.gradle'
+// apply from: 'upload.gradle'
