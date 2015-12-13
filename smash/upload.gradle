@@ -3,41 +3,42 @@ apply plugin: 'com.jfrog.bintray'
 
 def siteUrl = 'https://github.com/appformation/smash'
 def gitUrl = 'https://github.com/appformation/smash.git'
+
 group = "pl.appformation"
+version = '0.2.0'
 
 install
 {
     repositories.mavenInstaller
     {
-        pom
+        pom.project
         {
-            project
+            packaging 'aar'
+
+            name 'Smash'
+            description 'Smash is Volley inspired networking library that\'s using OkHttp in its core'
+            version '0.2.0'
+
+            url siteUrl
+
+            licenses { license
             {
-                packaging 'aar'
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            } }
 
-                name 'Smash'
-                description = 'Smash is Volley inspired networking library that\'s using OkHttp in its core'
+            developers { developer
+            {
+                id 'appformation'
+                name 'Appformation'
+                email 'lukasz@appformation.pl'
+            } }
+
+            scm
+            {
+                connection gitUrl
+                developerConnection gitUrl
                 url siteUrl
-
-                licenses { license
-                {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                } }
-
-                developers { developer
-                {
-                    id 'appformation'
-                    name 'Appformation'
-                    email 'lukasz@appformation.pl'
-                } }
-
-                scm
-                {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
             }
         }
     }
@@ -74,6 +75,8 @@ if (project.rootProject.file("local.properties").exists())
         key = properties.getProperty("bintray.apikey")
 
         configurations = ['archives']
+        dryRun = false
+
         pkg
         {
             repo = "maven"
@@ -82,12 +85,16 @@ if (project.rootProject.file("local.properties").exists())
             vcsUrl = gitUrl
             licenses = ["Apache-2.0"]
             publish = true
-
-            version { gpg
-            {
-                sign = true
-                passphrase = properties.getProperty("bintray.gpg.password")
-            } }
+        }
+        pkg.version
+        {
+            name = "0.2.0"
+            vcsTag = '0.2.0'
+        }
+        pkg.version.gpg
+        {
+            sign = true
+            passphrase = properties.getProperty("bintray.gpg.password")
         }
     }
 }
