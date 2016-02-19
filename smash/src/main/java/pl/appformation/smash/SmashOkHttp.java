@@ -16,13 +16,13 @@
 package pl.appformation.smash;
 
 import android.support.annotation.NonNull;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+import okhttp3.Headers;
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import java.io.IOException;
 import okio.Buffer;
 import okio.BufferedSource;
@@ -50,7 +50,9 @@ public class SmashOkHttp
      */
     public static void addNetworkInterceptor(@NonNull Interceptor interceptor)
     {
-        sHttpClient.networkInterceptors().add(interceptor);
+        sHttpClient = sHttpClient.newBuilder()
+                .addNetworkInterceptor(interceptor)
+                .build();
     }
 
     private static RequestBody convertBody(SmashRequest request, BufferedSource body) throws SmashError
@@ -167,7 +169,9 @@ public class SmashOkHttp
      */
     public static void removeNetworkInterceptor(@NonNull Interceptor interceptor)
     {
-        sHttpClient.networkInterceptors().remove(interceptor);
+        OkHttpClient.Builder builder = sHttpClient.newBuilder();
+        builder.networkInterceptors().remove(interceptor);
+        sHttpClient = builder.build();
     }
 
 }

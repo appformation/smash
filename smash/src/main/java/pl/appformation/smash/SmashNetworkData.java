@@ -15,7 +15,7 @@
  */
 package pl.appformation.smash;
 
-import com.squareup.okhttp.Headers;
+import okhttp3.Headers;
 import okio.Source;
 
 public class SmashNetworkData
