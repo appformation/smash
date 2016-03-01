@@ -50,6 +50,18 @@ public class SmashError extends Exception
         super(message, throwable);
     }
 
+    public SmashError(String message, SmashNetworkData data, Throwable throwable)
+    {
+        super(message, throwable);
+        this.data = data;
+    }
+
+    public SmashError(SmashNetworkData data, Throwable throwable)
+    {
+        super(throwable);
+        this.data = data;
+    }
+
     public SmashError(Throwable throwable)
     {
         super(throwable);
