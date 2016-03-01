@@ -26,7 +26,7 @@ public class SmashQueue
 {
 
     /** Default thread pool size */
-    private static final int THREAD_POOL_SIZE = 3;
+    private static final int THREAD_POOL_SIZE = 5;
 
     /**
      * The set of all requests currently being processed by this SmashQueue. A Request
