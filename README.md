@@ -89,12 +89,20 @@ Changelog
 [Current version is 0.2.0](CHANGELOG.md)
 
 
-Dependencies
-------------
+Dependencies of version 0.2.0
+-----------------------------
 
-* com.squareup.okhttp3:okhttp 3.0.0-RC1
-* com.squareup.okhttp3:okhttp-urlconnection 3.0.0-RC1
+* com.squareup.okhttp:okhttp 2.4.0
+* com.squareup.okhttp:okhttp-urlconnection 2.4.0
 * com.android.support:support-annotations 23.1.1
+
+
+Dependencies of development version
+-----------------------------------
+
+* com.squareup.okhttp3:okhttp 3.2.0
+* com.squareup.okhttp3:okhttp-urlconnection 3.2.0
+* com.android.support:support-annotations 23.2.0
 
 
 License

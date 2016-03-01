@@ -5,7 +5,7 @@ def siteUrl = 'https://github.com/appformation/smash'
 def gitUrl = 'https://github.com/appformation/smash.git'
 
 group = "pl.appformation"
-version = '0.2.0'
+version = '0.3.0'
 
 install
 {
@@ -17,7 +17,7 @@ install
 
             name 'Smash'
             description 'Smash is Volley inspired networking library that\'s using OkHttp in its core'
-            version '0.2.0'
+            version '0.3.0'
 
             url siteUrl
 
@@ -88,8 +88,8 @@ if (project.rootProject.file("local.properties").exists())
         }
         pkg.version
         {
-            name = "0.2.0"
-            vcsTag = '0.2.0'
+            name = "0.3.0"
+            vcsTag = '0.3.0'
         }
         pkg.version.gpg
         {

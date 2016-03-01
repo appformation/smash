@@ -21,14 +21,14 @@ ext
 {
     PUBLISH_GROUP_ID = 'pl.appformation'
     PUBLISH_ARTIFACT_ID = 'smash'
-    PUBLISH_VERSION = '0.2.0'
+    PUBLISH_VERSION = '0.3.0'
 }
 
 dependencies
 {
-    compile "com.squareup.okhttp3:okhttp:3.0.0-RC1"
-    compile "com.squareup.okhttp3:okhttp-urlconnection:3.0.0-RC1"
-    compile 'com.android.support:support-annotations:23.1.1'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
+    compile 'com.android.support:support-annotations:23.2.0'
 }
 
 apply from: 'upload.gradle'
