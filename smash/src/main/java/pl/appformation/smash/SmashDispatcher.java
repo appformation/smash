@@ -148,6 +148,7 @@ public class SmashDispatcher extends Thread
             public void run()
             {
                 request.deliverError(error);
+                request.finish();
             }
         });
     }
@@ -161,6 +162,7 @@ public class SmashDispatcher extends Thread
             public void run()
             {
                 request.deliverResponse(response);
+                request.finish();
             }
         });
     }
