@@ -73,10 +73,10 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
     private final @MethodRes int mMethod;
 
     /** Successful request listener */
-    private final SuccessListener<T> mSuccessListener;
+    private SuccessListener<T> mSuccessListener;
 
     /** Failed request listener */
-    private final FailedListener mFailedListener;
+    private FailedListener mFailedListener;
 
     /** Whether or not response of this request has been delivered */
     private boolean mResponseDelivered = false;
@@ -172,6 +172,9 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
      */
     void finish()
     {
+        mFailedListener = null;
+        mSuccessListener = null;
+
         if (mSmashQueue != null)
         {
             mSmashQueue.finishRequest(this);
@@ -251,9 +254,17 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
     }
 
     /**
+     * Returns {@link SmashQueue} for use in Request
+     */
+    protected SmashQueue getSmashQueue()
+    {
+        return mSmashQueue;
+    }
+
+    /**
      * Returns request URL.
      */
-    String getUrl()
+    protected String getUrl()
     {
         return mUrl;
     }
@@ -264,6 +275,14 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
     public boolean isCanceled()
     {
         return mCanceled;
+    }
+
+    /**
+     * Returns true if underlying {@link okhttp3.OkHttpClient} should follow redirects
+     */
+    protected boolean isFollowingRedirects()
+    {
+        return true;
     }
 
     /**

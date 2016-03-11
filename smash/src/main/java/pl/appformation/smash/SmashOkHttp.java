@@ -16,14 +16,18 @@
 package pl.appformation.smash;
 
 import android.support.annotation.NonNull;
+import java.io.IOException;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
+import okhttp3.JavaNetCookieJar;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import java.io.IOException;
 import okio.Buffer;
 import okio.BufferedSource;
 import pl.appformation.smash.errors.SmashError;
@@ -41,7 +45,11 @@ public class SmashOkHttp
     public static final String HEADER_USER_AGENT = "User-Agent";
 
     /** Default OkHttpClient instance */
-    private static OkHttpClient sHttpClient = new OkHttpClient();
+    private static OkHttpClient sHttpClient = new OkHttpClient().newBuilder()
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .build();
 
     /**
      * Adds {@link Interceptor} object to default {@link OkHttpClient} instance.
@@ -90,6 +98,14 @@ public class SmashOkHttp
     static @NonNull SmashNetworkData perform(SmashRequest<?> request) throws SmashError
     {
         SmashNetworkData data = new SmashNetworkData();
+        Request okRequest = null;
+
+        CookieManager cookieManager = new CookieManager();
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+
+        sHttpClient = sHttpClient.newBuilder()
+                .cookieJar(new JavaNetCookieJar(cookieManager))
+                .build();
 
         try
         {
@@ -141,7 +157,15 @@ public class SmashOkHttp
                 }
             }
 
-            Request okRequest = okBuilder.build();
+            boolean previousFollowing = sHttpClient.followRedirects();
+            if (previousFollowing != request.isFollowingRedirects())
+            {
+                sHttpClient = sHttpClient.newBuilder()
+                        .followRedirects(request.isFollowingRedirects())
+                        .build();
+            }
+
+            okRequest = okBuilder.build();
             Response okResponse = sHttpClient.newCall(okRequest).execute();
 
             if (body != null)
@@ -149,6 +173,14 @@ public class SmashOkHttp
                 body.close();
             }
 
+            if (previousFollowing != sHttpClient.followRedirects())
+            {
+                sHttpClient = sHttpClient.newBuilder()
+                        .followRedirects(request.isFollowingRedirects())
+                        .build();
+            }
+
+            data.url = okResponse.request().url();
             data.code = okResponse.code();
             data.headers = okResponse.headers();
             data.source = okResponse.body().source();
@@ -156,7 +188,12 @@ public class SmashOkHttp
         }
         catch (IOException ioe)
         {
-            throw new SmashError(ioe);
+            if (okRequest != null)
+            {
+                data.url = okRequest.url();
+            }
+
+            throw new SmashError(data, ioe);
         }
 
         return data;
@@ -171,6 +208,7 @@ public class SmashOkHttp
     {
         OkHttpClient.Builder builder = sHttpClient.newBuilder();
         builder.networkInterceptors().remove(interceptor);
+
         sHttpClient = builder.build();
     }
 

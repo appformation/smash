@@ -16,6 +16,7 @@
 package pl.appformation.smash;
 
 import okhttp3.Headers;
+import okhttp3.HttpUrl;
 import okio.Source;
 
 public class SmashNetworkData
@@ -28,6 +29,8 @@ public class SmashNetworkData
     public long length;
 
     public Source source;
+
+    public HttpUrl url;
 
     public boolean isNotModified()
     {
