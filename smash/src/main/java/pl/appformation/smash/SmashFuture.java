@@ -143,7 +143,9 @@ public class SmashFuture<T> implements Future<T>, SuccessListener<T>, FailedList
             mForwardFailedListener.onFailedResponse(error);
         }
 
+        mResultReceived = false;
         mException = error;
+
         notifyAll();
     }
 
@@ -159,6 +161,7 @@ public class SmashFuture<T> implements Future<T>, SuccessListener<T>, FailedList
 
         mResultReceived = true;
         mResult = response;
+
         notifyAll();
     }
 
