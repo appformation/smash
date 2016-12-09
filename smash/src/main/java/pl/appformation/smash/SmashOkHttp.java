@@ -105,6 +105,8 @@ public class SmashOkHttp
 
         sHttpClient = sHttpClient.newBuilder()
                 .cookieJar(new JavaNetCookieJar(cookieManager))
+                .followRedirects(true)
+                .retryOnConnectionFailure(true)
                 .build();
 
         try
@@ -165,19 +167,20 @@ public class SmashOkHttp
                         .build();
             }
 
+            boolean previousRetry = sHttpClient.retryOnConnectionFailure();
+            if (previousRetry != request.isShouldRetryOnFailure())
+            {
+                sHttpClient = sHttpClient.newBuilder()
+                        .retryOnConnectionFailure(request.isShouldRetryOnFailure())
+                        .build();
+            }
+
             okRequest = okBuilder.build();
             Response okResponse = sHttpClient.newCall(okRequest).execute();
 
             if (body != null)
             {
                 body.close();
-            }
-
-            if (previousFollowing != sHttpClient.followRedirects())
-            {
-                sHttpClient = sHttpClient.newBuilder()
-                        .followRedirects(request.isFollowingRedirects())
-                        .build();
             }
 
             data.url = okResponse.request().url();

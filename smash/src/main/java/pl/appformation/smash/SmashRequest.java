@@ -302,6 +302,14 @@ public abstract class SmashRequest<T> implements Comparable<SmashRequest<T>>
     }
 
     /**
+     * Returns true if silent retry should occur on first failure
+     */
+    public boolean isShouldRetryOnFailure()
+    {
+        return true;
+    }
+
+    /**
      * Subclasses can override this method to parse network error response
      * and return a more specific error.
      *
