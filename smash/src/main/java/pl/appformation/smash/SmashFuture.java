@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Appformation sp. z o.o.
+ * Copyright (C) 2015-2017 Appformation sp. z o.o.
  * Copyright (C) 2011 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

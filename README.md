@@ -11,7 +11,7 @@ Add Smash library to your project `build.gradle`
 ```groovy
 dependencies
 {
-    compile 'pl.appformation:smash:0.2.0'
+    compile 'pl.appformation:smash:0.3.0'
 }
 ```
 
@@ -86,29 +86,21 @@ Things to do
 Changelog
 ---------
 
-[Current version is 0.2.0](CHANGELOG.md)
+[Current version is 0.3.0](CHANGELOG.md)
 
 
-Dependencies of version 0.2.0
+Dependencies of version 0.3.0
 -----------------------------
 
-* com.squareup.okhttp:okhttp 2.4.0
-* com.squareup.okhttp:okhttp-urlconnection 2.4.0
-* com.android.support:support-annotations 23.1.1
-
-
-Dependencies of development version
------------------------------------
-
-* com.squareup.okhttp3:okhttp 3.2.0
-* com.squareup.okhttp3:okhttp-urlconnection 3.2.0
-* com.android.support:support-annotations 23.2.0
+* com.squareup.okhttp3:okhttp 3.5.0
+* com.squareup.okhttp3:okhttp-urlconnection 3.5.0
+* com.android.support:support-annotations 25.1.0
 
 
 License
 -------
 
-    Copyright (C) 2015 Appformation Sp. z o.o.
+    Copyright (C) 2015-2017 Appformation Sp. z o.o.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
